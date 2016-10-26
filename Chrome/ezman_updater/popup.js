@@ -9,16 +9,28 @@ function updateForm(){
 }
 
 function getInputValue(){
-input_value = document.getElementById('version_num').value;
-alert(input_value);
+inputValue = document.getElementById('version_num').value;
+return inputValue;
 }
 
 function getCheckedValue(){
-checked_value = $("input[name='cases_status']:checked").val();
-alert(checked_value);
+checkedValue = $("input[name='cases_status']:checked").val();
+return checkedValue;
+}
+
+function getURL(){
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({active: true, windowId: currentWindow.id},
+                      function(activeTabs) {
+						  tempURL = activeTabs[0].url;
+						  tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getInputValue());
+						  tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
+						  alert(tempURL);
+    });
+  });
 }
 
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = getCheckedValue;
+  document.getElementById('test_button').onclick = getURL;
 }
