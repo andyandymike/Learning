@@ -1,1 +1,0 @@
-document.querySelector('#su').value = 'All Hail Andy!';

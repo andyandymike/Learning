@@ -1,9 +1,23 @@
 <html>
 <head>
-<script src='background_page.js'></script>
+<script src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js'></script>
+<script src='popup.js'></script>
 </head>
 <body>
-<div id="my_div"></div>
-<button id="my_button">test background page</button>
+<form>
+<span>Build Number: D.</span>
+<input id='version_num' type='text' name='version_num' />
+<br />
+<span>Status:</span>
+<br />
+<span>Passed</span>
+<input type="radio" checked="checked" name="cases_status" value="Passed" />
+<br />
+<span>Failed</span>
+<input type="radio" name="cases_status" value="Failed" />
+<button id='test_button'>test</button>
+<br />
+<input id='upgrade_page' type='button' name='upgrade_page' value='upgrade page'>
+</form>
 </body>
 </html>

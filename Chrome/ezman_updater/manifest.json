@@ -17,15 +17,16 @@
         "default_popup": "popup.html"
     },
 	"permissions": ["tabs", "activeTab", "http://*/*", "https://*/*", "<all_urls>"],
+	"content_security_policy": "script-src 'self' https://ajax.aspnetcdn.com; object-src 'self'",
 	"content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["ezman_updater.js"],
+            "js": ["after_load.js"],
 			"run_at": "document_end"
         },
 		{
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["simplify_page.js"],
+            "js": ["before_load.js"],
 			"run_at": "document_start"
         }
     ]
