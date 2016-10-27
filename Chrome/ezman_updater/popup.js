@@ -30,7 +30,28 @@ function getURL(){
   });
 }
 
+function reDirect(){
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({active: true, windowId: currentWindow.id},
+                      function(activeTabs) {
+						  tempURL = activeTabs[0].url;
+						  tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getInputValue());
+						  tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
+						  chrome.tabs.executeScript(activeTabs[0].id, {code: 'window.location = "'+tempURL+'"', allFrames: true});
+    });
+  });
+}
+
+function refresh(){
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({active: true, windowId: currentWindow.id},
+                      function(activeTabs) {
+						  chrome.tabs.executeScript(activeTabs[0].id, {code: 'window.location.reload(true)', allFrames: true});
+    });
+  });
+}
+
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = getURL;
+  document.getElementById('test_button').onclick = refresh;
 }
