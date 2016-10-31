@@ -30,6 +30,15 @@ function getURL(){
   });
 }
 
+function getTabStatus(){
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({active: true, windowId: currentWindow.id},
+                      function(activeTabs) {
+						  alert(activeTabs[0].status);
+    });
+  });
+}
+
 function reDirect(){
   chrome.windows.getCurrent(function (currentWindow) {
     chrome.tabs.query({active: true, windowId: currentWindow.id},
@@ -51,7 +60,18 @@ function refresh(){
   });
 }
 
+function closeOpen(){
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({active: true, windowId: currentWindow.id},
+                      function(activeTabs) {
+						  alert(activeTabs[0].url)
+						  chrome.tabs.duplicate(activeTabs[0].id);
+						  chrome.tabs.remove(activeTabs[0].id);
+    });
+  });
+}
+
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = refresh;
+  document.getElementById('test_button').onclick = getTabStatus;
 }

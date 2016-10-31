@@ -16,7 +16,7 @@
         "default_title": "ezman_updater",
         "default_popup": "popup.html"
     },
-	"permissions": ["tabs", "activeTab", "*://*/ezman/*"],
+	"permissions": ["tabs", "activeTab", "*://*/ezman/*", "<all_urls>"],
 	"content_security_policy": "script-src 'self' https://ajax.aspnetcdn.com; object-src 'self'",
 	"content_scripts": [
         {
