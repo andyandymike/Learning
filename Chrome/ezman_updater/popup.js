@@ -71,7 +71,13 @@ function closeOpen(){
   });
 }
 
+function sendCurrentTabId(){
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	  chrome.extension.getBackgroundPage().test = tabs[0].id;
+	});
+}
+
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = closeOpen;
+  document.getElementById('test_button').onclick = sendCurrentTabId;
 }
