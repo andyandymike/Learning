@@ -4,8 +4,3 @@ window.onload = function(){
 	my_head = document.querySelector('head');
 	my_head.appendChild(jquery_script);
 }
-
-chrome.tabs.onUpdated.addListener(function (tab){
-	alert(tab.url);
-	alert(tab.status);
-});

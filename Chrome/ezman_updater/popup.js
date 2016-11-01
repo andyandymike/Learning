@@ -73,5 +73,5 @@ function closeOpen(){
 
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = getTabStatus;
+  document.getElementById('test_button').onclick = closeOpen;
 }
