@@ -1,83 +1,57 @@
-function updateForm(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-		chrome.tabs.executeScript(
-        activeTabs[0].id, {file: 'updateForm.js', allFrames: true});
-    });
-  });
-}
-
 function getInputValue(){
-inputValue = document.getElementById('version_num').value;
-return inputValue;
+	inputValue = document.getElementById('version_num').value;
+	return inputValue;
 }
 
 function getCheckedValue(){
-checkedValue = $("input[name='cases_status']:checked").val();
-return checkedValue;
-}
-
-function getURL(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-						  tempURL = activeTabs[0].url;
-						  tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getInputValue());
-						  tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
-						  alert(tempURL);
-    });
-  });
-}
-
-function getTabStatus(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-						  alert(activeTabs[0].status);
-    });
-  });
+	checkedValue = $("input[name='cases_status']:checked").val();
+	return checkedValue;
 }
 
 function reDirect(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-						  tempURL = activeTabs[0].url;
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+						  tempURL = tabs[0].url;
 						  tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getInputValue());
 						  tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
-						  chrome.tabs.executeScript(activeTabs[0].id, {code: 'window.location = "'+tempURL+'"', allFrames: true});
+						  chrome.tabs.executeScript(tabs[0].id, {code: 'window.location = "'+tempURL+'"', allFrames: true});
     });
-  });
 }
 
 function refresh(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-						  chrome.tabs.executeScript(activeTabs[0].id, {code: 'window.location.reload(true)', allFrames: true});
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		chrome.tabs.executeScript(tabs[0].id, {file: 'refresh.js', allFrames: true});
     });
-  });
 }
 
 function closeOpen(){
-  chrome.windows.getCurrent(function (currentWindow) {
-    chrome.tabs.query({active: true, windowId: currentWindow.id},
-                      function(activeTabs) {
-						  alert(activeTabs[0].url)
-						  chrome.tabs.duplicate(activeTabs[0].id);
-						  chrome.tabs.remove(activeTabs[0].id);
-    });
-  });
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		chrome.tabs.duplicate(tabs[0].id, function(tab){
+			chrome.extension.getBackgroundPage().selectedId = tab.id;
+		});
+		chrome.tabs.remove(tabs[0].id);
+	});
 }
 
 function sendCurrentTabId(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	  chrome.extension.getBackgroundPage().test = tabs[0].id;
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
+		alert(tempId);
+	});
+}
+
+function getStatus(){
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		alert(tabs[0].status);
+	});
+}
+
+function test(){
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		chrome.tabs.update(tabs[0].id, {url:'javascript:void window.stop();'});
 	});
 }
 
 window.onload = function() {
-  document.getElementById('upgrade_page').onclick = updateForm;
-  document.getElementById('test_button').onclick = sendCurrentTabId;
+  document.getElementById('upgrade_page').onclick = closeOpen;
+  document.getElementById('test').onclick = test;
 }
