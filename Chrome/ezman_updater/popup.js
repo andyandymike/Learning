@@ -19,7 +19,7 @@ function reDirect(){
 
 function refresh(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.executeScript(tabs[0].id, {file: 'refresh.js', allFrames: true});
+		chrome.tabs.executeScript(tabs[0].id, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
     });
 }
 
@@ -53,5 +53,5 @@ function test(){
 
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = closeOpen;
-  document.getElementById('test').onclick = test;
+  document.getElementById('test').onclick = refresh;
 }
