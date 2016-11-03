@@ -19,7 +19,7 @@
 	"background": {
     "scripts": ["background.js"]
 	},
-	"permissions": ["tabs", "activeTab", "*://*/ezman/*"],
+	"permissions": ["tabs", "activeTab", "storage", "*://*/ezman/*"],
 	"content_security_policy": "script-src 'self' https://ajax.aspnetcdn.com; object-src 'self'",
 	"content_scripts": [
         {
