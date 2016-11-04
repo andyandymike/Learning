@@ -56,7 +56,8 @@ function updatePage(){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
 					chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-					reDirect(tempURL);
+					test(tempURL);
+					//reDirect(tempURL);
 				}
 				else{
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
@@ -86,23 +87,19 @@ function updatePage(){
 	});
 }
 
-function test(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		id = tabs[0].id;
-		chrome.storage.local.get({tabIds: []}, function (result) {
-			var tabIds = result.tabIds;
-			tabIds.push(id);
-			chrome.storage.local.set({tabIds: tabIds, [id.toString()]: 'test'}, function () {
-				test = id.toString();
-				chrome.storage.local.get('tabIds', function (result) {
-					alert(result.tabIds);
+function test(url){
+	chrome.storage.local.get({updateURLs: []}, function (result) {
+		var updateURLs = result.updateURLs;
+		updateURLs.push(url);
+		chrome.storage.local.set({updateURLs: updateURLs}, function () {
+			chrome.storage.local.get('updateURLs', function (result) {
+				//alert(result.updateURLs);
 				});
 			});
 		});
-	});
 }
 
-function clear(){
+function clearStorage(){
 	chrome.storage.local.clear();
 }
 
@@ -110,5 +107,5 @@ function clear(){
 window.onload = function() {
   document.getElementById('upgrade_page').onclick = updatePage;
   document.getElementById('test').onclick = test;
-  document.getElementById('test2').onclick = clear;
+  document.getElementById('test2').onclick = clearStorage;
 }

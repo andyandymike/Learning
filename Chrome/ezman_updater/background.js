@@ -17,6 +17,28 @@ function reDirect(tabId, url){
     });
 }
 
+function createReDirect(url){
+	chrome.tabs.create({url: url}, function(tab){
+		reDirect(tab.id, url);
+	});
+}
+
+function uniqueArrary(array){
+	var sortedArr = array.sort(); 
+	var results = [];
+	for (var i = 0; i < sortedArr.length; i++) {
+		if (sortedArr[i + 1] == sortedArr[i]) {
+			results.push(sortedArr[i]);
+			sortedArr.splice(i + 1);
+			i = i - 1;
+		}
+		else{
+			results.push(sortedArr[i])
+		}
+	}
+	return results;
+}
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 	if(message.count <= 2){
 		reDirect(message.id, message.url);
@@ -25,13 +47,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 });
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-	for (key in changes) {
-          var storageChange = changes[key];
-          console.log('Storage key "%s" in namespace "%s" changed. ' +
-                      'Old value was "%s", new value is "%s".',
-                      key,
-                      namespace,
-                      storageChange.oldValue,
-                      storageChange.newValue);
+	for (changeKey in changes) {
+          var storageChange = changes[changeKey];
+          //alert('key: '+changeKey+' in: '+namespace+' cahnges! Old: '+storageChange.oldValue+' New: '+storageChange.newValue);
+		  alert(uniqueArrary(storageChange.newValue));
         }
 });
