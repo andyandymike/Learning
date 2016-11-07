@@ -12,7 +12,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, props) {
 			  });
 		  }
 		});
-	};
+	}
+	if(props.url.indexOf('statusUpdate') > -1){
+		chrome.tabs.remove(tabId);
+	}
 });
 
 function reDirect(tabId, url){
