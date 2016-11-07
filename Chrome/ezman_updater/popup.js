@@ -8,43 +8,10 @@ function getCheckedValue(){
 	return checkedValue;
 }
 
-function reDirect(url){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.executeScript(tabs[0].id, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"});
-    });
-}
-
 function refresh(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		chrome.tabs.executeScript(tabs[0].id, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
     });
-}
-
-function updateForm(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.executeScript(tabs[0].id, {file: 'updateForm.js', allFrames: true, runAt: "document_start"});
-    });
-}
-
-function closeOpen(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.duplicate(tabs[0].id, function(tab){
-			chrome.extension.getBackgroundPage().selectedId = tab.id;
-		});
-		chrome.tabs.remove(tabs[0].id);
-	});
-}
-
-function sendCurrentTabId(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-	});
-}
-
-function getStatus(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		alert(tabs[0].status);
-	});
 }
 
 function updatePage(){
@@ -55,29 +22,24 @@ function updatePage(){
 				if(getVersionNum() == ''){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
-					chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-					test(tempURL);
-					//reDirect(tempURL);
+					addURL(tempURL);
 				}
 				else{
+					var tempURLs = [];
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
-					chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-					chrome.runtime.sendMessage({'count': 1, 'id': tabs[0].id, 'url': tempURL}, function(response){
-						alert('test');
-						tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
-						tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
-						chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-						chrome.runtime.sendMessage({'count': 2, 'id': tabs[0].id, 'url': tempURL}, function(response){alert(response);});
-						});					
+					tempURLs.push(tempURL);
+					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
+					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
+					tempURLs.push(tempURL);
+					addURL(tempURLs);					
 				}
 			}
 			else{
 				if(getVersionNum() != ''){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
-					chrome.extension.getBackgroundPage().selectedId = tabs[0].id;
-					reDirect(tempURL);
+					addURL(tempURL);
 				}
 			}
 		}
@@ -87,16 +49,25 @@ function updatePage(){
 	});
 }
 
-function test(url){
+function addURL(url){
 	chrome.storage.local.get({updateURLs: []}, function (result) {
 		var updateURLs = result.updateURLs;
-		updateURLs.push(url);
-		chrome.storage.local.set({updateURLs: updateURLs}, function () {
-			chrome.storage.local.get('updateURLs', function (result) {
-				//alert(result.updateURLs);
-				});
-			});
-		});
+		if(typeof url === 'object'){
+			for(var i = 0; i < url.length; i++){
+				updateURLs.push(url[i]);
+			}
+		}
+		else{
+			updateURLs.push(url);
+		}
+		chrome.storage.local.set({updateURLs: updateURLs});
+	});
+}
+
+function checkStorage(){
+	chrome.storage.local.get({updateURLs: []}, function (result) {
+		alert(result.updateURLs);
+	});
 }
 
 function clearStorage(){
@@ -105,7 +76,7 @@ function clearStorage(){
 
 
 window.onload = function() {
-  document.getElementById('upgrade_page').onclick = updatePage;
-  document.getElementById('test').onclick = test;
-  document.getElementById('test2').onclick = clearStorage;
+	document.getElementById('upgrade_page').onclick = updatePage;
+	document.getElementById('test').onclick = checkStorage;
+	document.getElementById('test2').onclick = clearStorage;
 }
