@@ -17,19 +17,15 @@
         "default_popup": "popup.html"
     },
 	"background": {
-    "scripts": ["jquery-3.1.1.js", "background.js"]
+		"scripts": ["jquery-3.1.1.js", "background.js"]
 	},
+	"options_page": "options.html",
 	"permissions": ["tabs", "activeTab", "storage", "*://*/ezman/*"],
 	"content_security_policy": "script-src 'self' https://ajax.aspnetcdn.com; object-src 'self'",
 	"content_scripts": [
-        {
-            "matches": ["*://*/ezman/*"],
-            "js": ["after_load.js"],
-			"run_at": "document_end"
-        },
 		{
             "matches": ["*://*/ezman/*"],
-            "js": ["before_load.js"],
+            "js": ["content.js"],
 			"run_at": "document_start"
         }
     ]

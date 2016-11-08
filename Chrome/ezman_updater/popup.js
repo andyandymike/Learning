@@ -8,12 +8,6 @@ function getCheckedValue(){
 	return checkedValue;
 }
 
-function refresh(){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.executeScript(tabs[0].id, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
-    });
-}
-
 function updatePage(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		tempURL = tabs[0].url;
@@ -64,19 +58,16 @@ function addURL(url){
 	});
 }
 
-function checkStorage(){
-	chrome.storage.local.get({updateURLs: []}, function (result) {
-		alert(result.updateURLs);
+function test(){
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		tabId = tabs[0].id
+		chrome.tabs.executeScript(tabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){
+			chrome.tabs.sendMessage(tabId, {text: 'get_body'}, function (targetElement){});
+		});
 	});
 }
 
-function clearStorage(){
-	chrome.storage.local.clear();
-}
-
-
 window.onload = function() {
 	document.getElementById('upgrade_page').onclick = updatePage;
-	document.getElementById('test').onclick = checkStorage;
-	document.getElementById('test2').onclick = clearStorage;
+	document.getElementById('test').onclick = test;
 }

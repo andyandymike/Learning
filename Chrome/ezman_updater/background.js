@@ -1,36 +1,42 @@
 var selectedId = [];
 
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+	if (msg.text === 'body_loaded') {
+		alert('loaded');
+		}
+});
+				
 chrome.tabs.onUpdated.addListener(function(tabId, props) {
 	tabIdIndex = selectedId.indexOf(tabId);
 	if (props.status == "complete" && selectedId.indexOf(tabId) > -1) {
 	  chrome.tabs.get(selectedId[tabIdIndex], function(tab){
 		  if(tab.url.match('statusUpdate') != 'statusUpdate'){
+			  tempURL = tab.url;
 			  chrome.tabs.executeScript(tabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"}, function(){
 				  if(tabIdIndex > -1){
 					  selectedId.splice(tabIdIndex, 1);
 				  }
+				  chrome.storage.local.get({updateURLs: []}, function (result) {
+					var updateURLs = result.updateURLs;
+					urlIndex = updateURLs.indexOf(tempURL);
+					if(urlIndex > -1){
+						updateURLs.splice(urlIndex, 1);
+					}
+					chrome.storage.local.set({updateURLs: updateURLs});
+					});
 			  });
 		  }
 		});
 	}
-	if(props.url.indexOf('statusUpdate') > -1){
-		chrome.tabs.remove(tabId);
-	}
+	//if(props.url.indexOf('statusUpdate') > -1){
+	//	chrome.tabs.remove(tabId);
+	//}
 });
 
 function reDirect(tabId, url){
 	selectedId.push(tabId);
 	chrome.tabs.get(tabId, function(tab){
-		chrome.tabs.executeScript(tabId, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"}, function(){
-				chrome.storage.local.get({updateURLs: []}, function (result) {
-					var updateURLs = result.updateURLs;
-					urlIndex = updateURLs.indexOf(url);
-					if(urlIndex > -1){
-						updateURLs.splice(urlIndex, 1);
-					}
-					chrome.storage.local.set({updateURLs: updateURLs});
-			});
-		});
+		chrome.tabs.executeScript(tabId, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"}, function(){});
     });
 }
 
@@ -58,20 +64,8 @@ function uniqueArrary(array){
 chrome.storage.onChanged.addListener(function(changes, namespace) {
 	for (changeKey in changes) {
           var storageChange = changes[changeKey];
-          //alert('key: '+changeKey+' in: '+namespace+' changes! Old: '+storageChange.oldValue+' New: '+storageChange.newValue);
-		  if(storageChange.oldValue ==  undefined){
-			  if(storageChange.newValue != undefined){
-				  for(var i = 0; i < storageChange.newValue.length; i++){
-					  createReDirect(storageChange.newValue[i]);
-					}
-				}
-			}
-		  else{
-			  if(storageChange.oldValue < storageChange.newValue){
-				  for(var i = 0; i < storageChange.newValue.length; i++){
-					  createReDirect(storageChange.newValue[i]);
-					  }
-				}
-			}
+		  if(storageChange.newValue[0] !=  undefined){
+			  createReDirect(storageChange.newValue[0]);
+		  }
 	}
 });
