@@ -1,10 +1,4 @@
 var selectedId = [];
-
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-	if (msg.text === 'body_loaded') {
-		alert('loaded');
-		}
-});
 				
 chrome.tabs.onUpdated.addListener(function(tabId, props) {
 	tabIdIndex = selectedId.indexOf(tabId);
