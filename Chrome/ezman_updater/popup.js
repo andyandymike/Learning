@@ -61,7 +61,7 @@ function addURL(url){
 function test(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		tabId = tabs[0].id
-		chrome.tabs.sendMessage(tabId, {text: 'body_loaded?'}, function (response){
+		chrome.tabs.sendMessage(tabId, {text: 'loaded?'}, function (response){
 			alert(response.text);
 		});
 	});
