@@ -14,7 +14,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, props) {
 						chrome.tabs.executeScript(selectedId[tabIdIndex], {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
 						}
 					if(updatePageStatus == 'loaded'){
-						alert('page loaded!');
+						//alert('page loaded!');
 						chrome.tabs.executeScript(tabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"}, function(){
 							if(tabIdIndex > -1){
 								selectedId.splice(tabIdIndex, 1);
@@ -33,9 +33,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, props) {
 				}
 		});
 	}
-	//if(props.url.indexOf('statusUpdate') > -1){
-	//	chrome.tabs.remove(tabId);
-	//}
+	if(props.url.indexOf('statusUpdate') > -1){
+		chrome.tabs.remove(tabId);
+	}
 });
 
 function reDirect(tabId, url){

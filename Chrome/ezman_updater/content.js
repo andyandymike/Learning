@@ -1,5 +1,5 @@
 var intervalFunc = null;
-var targetElementSelector = 'body > form > table > tbody > tr:nth-child(2) > td > table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(2) > td:nth-child(1)'
+var targetElementSelector = 'body > form > table > tbody > tr:nth-child(2) > td > table:nth-child(9) > tbody > tr:nth-child(1) > td:nth-child(1)'
 var intervalCount = 0;
 var timeOutCount = 100;
 var intervalTime = 600;
