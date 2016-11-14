@@ -49,21 +49,6 @@ function createReDirect(url){
 	});
 }
 
-function uniqueArrary(array){
-	var sortedArr = array.sort(); 
-	var results = [];
-	for (var i = 0; i < sortedArr.length; i++) {
-		if (sortedArr[i + 1] == sortedArr[i]) {
-			sortedArr.splice(i + 1, 1);
-			i--;
-		}
-		else{
-			results.push(sortedArr[i])
-		}
-	}
-	return results;
-}
-
 chrome.storage.onChanged.addListener(function(changes, namespace) {
 	for (var changeKey in changes) {
           var storageChange = changes[changeKey];
