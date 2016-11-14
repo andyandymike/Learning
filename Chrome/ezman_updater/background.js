@@ -14,7 +14,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, props) {
 						chrome.tabs.executeScript(selectedId[tabIdIndex], {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
 						}
 					if(updatePageStatus == 'loaded'){
-						alert('page loaded!');
 						chrome.tabs.executeScript(tabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"}, function(){
 							if(tabIdIndex > -1){
 								selectedId.splice(tabIdIndex, 1);
