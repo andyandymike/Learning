@@ -1,5 +1,5 @@
 var intervalFunc = null;
-var targetElementSelector = 'body > form > table > tbody > tr:nth-child(2) > td > table:nth-child(9) > tbody > tr:nth-child(1) > td:nth-child(1)'
+var targetElementSelector = 'body > form > table > tbody > tr:nth-child(2) > td > table:nth-child(9) > tbody > tr:nth-child(6) > td:nth-child(1) > input[type="submit"]'
 var intervalCount = 0;
 var timeOutCount = 100;
 var intervalTime = 600;
@@ -16,7 +16,7 @@ function waitForElement(sendResponse){
 	if(intervalCount > timeOutCount){
 		sendResponse({status: 'timeout'});
 	}
-	targetElement = document.querySelector(targetElementSelector);
+	var targetElement = document.querySelector(targetElementSelector);
 	if (targetElement != undefined) {
 		clearInterval(intervalFunc);
 		sendResponse({status: 'loaded'});
