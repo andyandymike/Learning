@@ -8,6 +8,12 @@ function getCheckedValue(){
 	return checkedValue;
 }
 
+function getSuiteName(url){
+	var suiteName = url.match(/suite=[^\&]*/);
+	suiteName = suiteName[0].replace('suite=','');
+	return suiteName;
+}
+
 function uniqueArrary(array){
 	var sortedArr = array.sort(); 
 	var results = [];
@@ -53,7 +59,7 @@ function updatePage(){
 			}
 		}
 		else{
-			//alert('Cannot update current page!');
+			//console.log('Cannot update current page!');
 		}
 	});
 }
@@ -96,22 +102,26 @@ function updateAllPages(){
 }
 
 function addURL(url){
-	chrome.storage.local.get({updateURLs: []}, function (result) {
-		var updateURLs = result.updateURLs;
-		if(typeof url === 'object'){
-			for(var i = 0; i < url.length; i++){
-				updateURLs.push(url[i]);
+	var suiteName = '';
+	var obj = {};
+	if(typeof url === 'object'){
+		for(var i = 0; i < url.length; i++){
+			suiteName = getSuiteName(url[i]);
+			if(obj[suiteName] == undefined){
+				obj[suiteName] = [];
 			}
+			obj[suiteName].push(url[i]);
 		}
-		else{
-			updateURLs.push(url);
-		}
-		chrome.storage.local.set({updateURLs: updateURLs});
-	});
+	}
+	else{
+		suiteName = getSuiteName(url);
+		obj[suiteName] = [];
+		obj[suiteName].push(url);
+	}
+	chrome.storage.local.set(obj);
 }
 
 function test(){
-	console.log('test');
 }
 
 window.onload = function() {

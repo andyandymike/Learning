@@ -1,6 +1,9 @@
 function checkStorage(){
-	chrome.storage.local.get({updateURLs: []}, function (result) {
-		alert(result.updateURLs);
+	chrome.storage.local.get(null, function (result) {
+		for(var resultKey in result){
+			alert(resultKey + ' : ' + result[resultKey]);
+		}
+		
 	});
 }
 
