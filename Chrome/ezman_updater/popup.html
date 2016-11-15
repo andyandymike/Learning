@@ -2,27 +2,31 @@
 <head>
 <script src='jquery-3.1.1.js'></script>
 <script src='popup.js'></script>
+<link rel='stylesheet' type='text/css' href='popup.css' />
 </head>
 <body>
 <form>
-<span>Build Number: D.</span>
-<input id='version_num' type='text' name='version_num' />
-<br />
-<span>Status:</span>
-<br />
+<div>
+<span class='title'>Build Number:</span>
+<input id='version_num' type='number' name='version_num' min = '0' max = '9999'/>
+</div>
+<div>
+<span class='title'>Status:</span>
+<br/>
 <span>Passed</span>
-<input type="radio" name="cases_status" value="Passed" />
-<br />
+<input type='radio' name='cases_status' value='Passed' />
+<br/>
 <span>Failed</span>
-<input type="radio" name="cases_status" value="Failed" />
-<br />
+<input type='radio' name='cases_status' value='Failed' />
+<br/>
 <span>Do not update</span>
-<input type="radio" checked="checked" name="cases_status" value="null" />
-<br />
-<br />
+<input type='radio' checked='checked' name='cases_status' value='null' />
+</div>
+<div id='button_area'>
 <input id='upgrade_page' type='button' name='upgrade_page' value='upgrade page'>
-<br />
-<input id='test' type='button' name='test' value='test page'>
+<br/>
+<input id='upgrade_all_pages' type='button' name='upgrade_all_pages' value='upgrade all pages'>
+</div>
 </form>
 </body>
 </html>

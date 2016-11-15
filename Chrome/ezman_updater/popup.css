@@ -1,0 +1,31 @@
+* {
+    margin: 1px;
+    padding: 1px;
+}
+
+body {
+    width: 200px;
+	height: 200px;
+}
+
+div {
+    line-height: 20px;
+    font-size: 15px;
+    text-align: left;
+}
+
+input[type='button'] {
+	font-size: 15px;
+	padding: 3px;
+	margin: 5px;
+	text-align: central;
+	width: 180px;
+}
+
+span.title {
+	font-weight:bold;
+}
+
+#button_area {
+	margin-top: 10px;
+}

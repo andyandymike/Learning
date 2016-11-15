@@ -17,7 +17,7 @@
         "default_popup": "popup.html"
     },
 	"background": {
-		"scripts": ["jquery-3.1.1.js", "background-test.js"]
+		"scripts": ["jquery-3.1.1.js", "background.js"]
 	},
 	"options_page": "options.html",
 	"permissions": ["tabs", "activeTab", "storage", "*://*/ezman/*"],

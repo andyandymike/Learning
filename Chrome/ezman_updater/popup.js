@@ -126,5 +126,5 @@ function test(){
 
 window.onload = function() {
 	document.getElementById('upgrade_page').onclick = updatePage;
-	document.getElementById('test').onclick = updateAllPages;
+	document.getElementById('upgrade_all_pages').onclick = updateAllPages;
 }
