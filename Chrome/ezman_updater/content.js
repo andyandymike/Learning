@@ -22,3 +22,34 @@ function waitForElement(sendResponse){
 		sendResponse({status: 'loaded'});
 		}
 }
+
+// This code will be injected to run in webpage context
+function codeToInject() {
+    window.addEventListener('error', function(e) {
+        var error = {
+            stack: e.error.stack
+        };
+        document.dispatchEvent(new CustomEvent('ReportError', {detail: error}));
+    });
+	
+	window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+		console.log('Caught content script error');
+		console.log('errorMsg: ' + errorMsg);
+		console.log('url: ' + url);
+		console.log('lineNumber: ' + column);
+		console.log('column: ' + column);
+		console.log('errorObj follows:');
+		console.log(errorObj);
+		return true;
+	};
+}
+
+document.addEventListener('ReportError', function(e) {
+    console.log('CONTENT SCRIPT', e.detail.stack);
+});
+
+//Inject code
+var script = document.createElement('script');
+script.textContent = '(' + codeToInject + '())';
+(document.head||document.documentElement).appendChild(script);
+//script.parentNode.removeChild(script);

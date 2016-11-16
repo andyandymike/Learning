@@ -20,7 +20,7 @@
 		"scripts": ["jquery-3.1.1.js", "background.js"]
 	},
 	"options_page": "options.html",
-	"permissions": ["tabs", "activeTab", "storage", "*://*/ezman/*"],
+	"permissions": ["tabs", "activeTab", "storage", "webRequest", "*://*/ezman/*"],
 	"content_security_policy": "script-src 'self' https://ajax.aspnetcdn.com; object-src 'self'",
 	"content_scripts": [
 		{
