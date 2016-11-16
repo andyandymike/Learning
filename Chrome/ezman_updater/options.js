@@ -1,8 +1,10 @@
 function checkStorage(){
+	clearDisplayArea('function_area1', 'display_area1', 'button_area');
 	chrome.storage.local.get(null, function (result) {
 		for(var resultKey in result){
-			createLine('display_area1', resultKey, result[resultKey]);
-			//alert(resultKey + ' : ' + result[resultKey]);
+			for(var i = 0; i < result[resultKey].length; i++){
+				createLine('display_area1', resultKey, result[resultKey][i]);
+			}
 		}
 		
 	});
@@ -25,6 +27,16 @@ function createLine(tableId, key, content){
 	tr.appendChild(tdKey);
 	tr.appendChild(tdContent);
 	tableNode.appendChild(tr);
+}
+
+function clearDisplayArea(functionAreaId, tableId, buttonAreaId){
+	var formNode = document.getElementById(functionAreaId);
+	var tableNode = document.getElementById(tableId);
+	formNode.removeChild(tableNode);
+	var newTableNode = document.createElement('table');
+	newTableNode.id = tableId;
+	var buttonAreaNode = document.getElementById(buttonAreaId);
+	formNode.insertBefore(newTableNode, buttonAreaNode);
 }
 
 
