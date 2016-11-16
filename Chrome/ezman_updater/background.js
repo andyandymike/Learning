@@ -31,11 +31,11 @@ function updatePage(updatePageTabId, updateSuiteName) {
 						}
 					});
 				}
-				//if(props.url.indexOf('statusUpdate') > -1){
-				//	chrome.tabs.remove(tabId);
-				//}
-			});
-		};
+			if(props.url.indexOf('statusUpdate') > -1){
+				chrome.tabs.remove(tabId);
+			}
+		});
+	};
 }
 
 function reDirect(tabId, url){
