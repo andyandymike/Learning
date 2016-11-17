@@ -122,9 +122,17 @@ function addURL(url){
 }
 
 function test(){
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		scope = {urls: ["*://*/ezman/*"], tabId: tabs[0].id};
+		chrome.webRequest.onErrorOccurred.addListener(function(details){
+		alert('error!');
+		message = details.tabId + ': ' +details.error
+		console.log('found: ' + message);
+		}, scope);
+	});
 }
 
 window.onload = function() {
 	document.getElementById('upgrade_page').onclick = updatePage;
-	document.getElementById('upgrade_all_pages').onclick = updateAllPages;
+	document.getElementById('upgrade_all_pages').onclick = test;
 }
