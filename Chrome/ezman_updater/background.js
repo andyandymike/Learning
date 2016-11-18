@@ -1,7 +1,18 @@
+var updatePageTabIds = [];
+
+var scope = {urls: ["*://*/ezman/TestCaseStatus.jsp*"]};
+chrome.webRequest.onErrorOccurred.addListener(function(details){
+	if(details.error == 'net::ERR_INCOMPLETE_CHUNKED_ENCODING'){
+		if(updatePageTabIds.indexOf(details.tabId) > -1){
+			chrome.tabs.executeScript(details.tabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
+		}
+	}
+	}, scope);
+
 function updatePage(updatePageTabId, updateSuiteName) {
 	var updatePageStatus = null;
 	
-	updatePage.prototype.addListener = function() {
+	updatePage.prototype.addOnUpdateListener = function() {
 		chrome.tabs.onUpdated.addListener(function(tabId, props) {
 			if (tabId == updatePageTabId) {
 				chrome.tabs.get(updatePageTabId, function(tab){
@@ -14,6 +25,11 @@ function updatePage(updatePageTabId, updateSuiteName) {
 								}
 							if(updatePageStatus == 'loaded'){
 								chrome.tabs.executeScript(updatePageTabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"}, function(){
+									var idIndex = updatePageTabIds.indexOf(updatePageTabId)
+									if(idIndex > -1){
+										updatePageTabIds.splice(idIndex, 1);
+									}
+									
 									var obj = {};
 									obj[updateSuiteName] = [];
 									chrome.storage.local.get(obj, function (result) {
@@ -39,6 +55,7 @@ function updatePage(updatePageTabId, updateSuiteName) {
 }
 
 function reDirect(tabId, url){
+	updatePageTabIds.push(tabId);
 	chrome.tabs.get(tabId, function(tab){
 		chrome.tabs.executeScript(tabId, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"}, function(){});
     });
@@ -47,7 +64,7 @@ function reDirect(tabId, url){
 function createReDirect(url, updateSuiteName){
 	chrome.tabs.create({url: url}, function(tab){
 		var oUpdatePage = new updatePage(tab.id, updateSuiteName);
-		oUpdatePage.addListener();
+		oUpdatePage.addOnUpdateListener();
 		reDirect(tab.id, url);
 	});
 }
