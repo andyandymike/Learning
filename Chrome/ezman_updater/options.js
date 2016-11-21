@@ -12,6 +12,7 @@ function checkStorage(){
 
 function clearStorage(){
 	chrome.storage.local.clear();
+	checkStorage();
 }
 
 function createLine(tableId, key, content){
