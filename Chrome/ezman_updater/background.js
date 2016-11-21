@@ -1,4 +1,5 @@
 var updatePageTabIds = [];
+var oriPageInfo = [];
 
 var scope = {urls: ["*://*/ezman/TestCaseStatus.jsp*"]};
 chrome.webRequest.onErrorOccurred.addListener(function(details){
@@ -75,6 +76,12 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 		if(storageChange.newValue[0] !=  undefined){
 			createReDirect(storageChange.newValue[0], changeKey);
 			}
-		else{}
+		else{
+			for(var i = 0; i < oriPageInfo.length; i++){
+				if(oriPageInfo[i][changeKey] != undefined){
+					chrome.tabs.remove(oriPageInfo[i][changeKey]);
+				}
+			}
+		}
 	}
 });

@@ -32,11 +32,16 @@ function uniqueArrary(array){
 function updatePage(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		var tempURL = tabs[0].url;
+		var tempId = tabs[0].id;
+		var obj = {};
+		var tempSuiteName = getSuiteName(tempURL);
+		obj[tempSuiteName] = tempId;
 		if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){
 			if(getCheckedValue() != 'null'){
 				if(getVersionNum() == ''){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
+					chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 					addURL(tempURL);
 				}
 				else{
@@ -47,6 +52,7 @@ function updatePage(){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
 					tempURLs.push(tempURL);
+					chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 					addURL(tempURLs);					
 				}
 			}
@@ -54,6 +60,7 @@ function updatePage(){
 				if(getVersionNum() != ''){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
 					tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
+					chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 					addURL(tempURL);
 				}
 			}
@@ -69,11 +76,16 @@ function updateAllPages(){
 		var tempURLs = []; 
 		for(var i = 0; i < tabs.length; i++){
 			var tempURL = tabs[i].url;
+			var tempId = tabs[i].id;
 			if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){
+				var obj = {};
+				var tempSuiteName = getSuiteName(tempURL);
+				obj[tempSuiteName] = tempId;
 				if(getCheckedValue() != 'null'){
 					if(getVersionNum() == ''){
 						tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
 						tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus='+getCheckedValue());
+						chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 						tempURLs.push(tempURL);	
 					}
 					else{
@@ -82,6 +94,7 @@ function updateAllPages(){
 						tempURLs.push(tempURL);
 						tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
 						tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
+						chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 						tempURLs.push(tempURL);				
 					}
 				}
@@ -89,6 +102,7 @@ function updateAllPages(){
 					if(getVersionNum() != ''){
 						tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=D.'+getVersionNum());
 						tempURL = tempURL.replace(/sstatus=\w*[\.]*\w*/,'sstatus=null');
+						chrome.extension.getBackgroundPage().oriPageInfo.push(obj);
 						tempURLs.push(tempURL);	
 					}
 				}
