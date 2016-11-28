@@ -48,7 +48,7 @@ function updatePage(updatePageTabId, updateSuiteName) {
 						}
 					});
 				}
-			if(props.url.indexOf('statusUpdate') > -1){
+			if(props.url.indexOf('statusUpdate') > -1 && tabId == updatePageTabId){
 				chrome.tabs.remove(tabId);
 			}
 		});
