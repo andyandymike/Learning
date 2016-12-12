@@ -17,8 +17,8 @@ function getSuiteName(url){
 function uniqueArrary(array){
 	var sortedArr = array.sort(); 
 	var results = [];
-	for (var i = 0; i < sortedArr.length; i++) {
-		if (sortedArr[i + 1] == sortedArr[i]) {
+	for (var i = 0; i < sortedArr.length; i++){
+		if (sortedArr[i + 1] == sortedArr[i]){
 			sortedArr.splice(i + 1, 1);
 			i--;
 		}
@@ -125,11 +125,15 @@ function addURL(url){
 				obj[suiteName] = [];
 			}
 			obj[suiteName].push(url[i]);
+			obj[suiteName].push(url[i]);
+			obj[suiteName].push(url[i]);
 		}
 	}
 	else{
 		suiteName = getSuiteName(url);
 		obj[suiteName] = [];
+		obj[suiteName].push(url);
+		obj[suiteName].push(url);
 		obj[suiteName].push(url);
 	}
 	chrome.storage.local.set(obj);
@@ -137,16 +141,12 @@ function addURL(url){
 
 function test(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		scope = {urls: ["*://*/ezman/*"], tabId: tabs[0].id};
-		chrome.webRequest.onErrorOccurred.addListener(function(details){
-		alert('error: ' + details.error);
-		message = details.tabId + ': ' + details.error
-		console.log('found: ' + message);
-		}, scope);
+		chrome.tabs.executeScript(tabs[0].id, {file: 'scrolldown.js', allFrames: true, runAt: "document_start"}, function(){});
 	});
 }
 
-window.onload = function() {
+window.onload = function(){
 	document.getElementById('upgrade_page').onclick = updatePage;
 	document.getElementById('upgrade_all_pages').onclick = updateAllPages;
+	document.getElementById('test').onclick = test;
 }

@@ -1,1 +1,3 @@
 net::ERR_INCOMPLETE_CHUNKED_ENCODING
+chrome:flags/#automatic-tab-discarding
+Failed to load resource: the server responded with a status of 500 (Internal Server Error)

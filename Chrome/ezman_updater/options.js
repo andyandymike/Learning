@@ -1,6 +1,6 @@
 function checkStorage(){
 	clearDisplayArea('function_area1', 'display_area1', 'button_area');
-	chrome.storage.local.get(null, function (result) {
+	chrome.storage.local.get(null, function (result){
 		for(var resultKey in result){
 			for(var i = 0; i < result[resultKey].length; i++){
 				createLine('display_area1', resultKey, result[resultKey][i]);
@@ -12,6 +12,7 @@ function checkStorage(){
 
 function clearStorage(){
 	chrome.storage.local.clear();
+	chrome.extension.getBackgroundPage().openedTabsNum = 0;
 	checkStorage();
 }
 
@@ -41,7 +42,7 @@ function clearDisplayArea(functionAreaId, tableId, buttonAreaId){
 }
 
 
-window.onload = function() {
+window.onload = function(){
 	document.getElementById('check_url_array').onclick = checkStorage;
 	document.getElementById('clear_url_array').onclick = clearStorage;
 }
