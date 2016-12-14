@@ -13,6 +13,13 @@ function checkStorage(){
 function clearStorage(){
 	chrome.storage.local.clear();
 	chrome.extension.getBackgroundPage().openedTabsNum = 0;
+	chrome.extension.getBackgroundPage().updateWindowId = 0;
+	chrome.extension.getBackgroundPage().lastChangeKey = '';
+	chrome.extension.getBackgroundPage().updatePageTabIds = [];
+	chrome.extension.getBackgroundPage().oriPageInfo = [];
+	chrome.extension.getBackgroundPage().tabsWaitingList = [];
+	chrome.extension.getBackgroundPage().tabsWaitingListKeyList = [];
+	chrome.extension.getBackgroundPage().tempURLs = [];
 	checkStorage();
 }
 
@@ -44,5 +51,5 @@ function clearDisplayArea(functionAreaId, tableId, buttonAreaId){
 
 window.onload = function(){
 	document.getElementById('check_url_array').onclick = checkStorage;
-	document.getElementById('clear_url_array').onclick = clearStorage;
+	document.getElementById('reset_all_parameter').onclick = clearStorage;
 }

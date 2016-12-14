@@ -1,3 +1,5 @@
+var testunitUpdateTimes = 1;
+
 function getVersionNum(){
 	var versionNum = document.getElementById('version_num').value;
 	return versionNum.replace(/\s/g,'');
@@ -17,8 +19,8 @@ function getSuiteName(url){
 function uniqueArrary(array){
 	var sortedArr = array.sort(); 
 	var results = [];
-	for (var i = 0; i < sortedArr.length; i++){
-		if (sortedArr[i + 1] == sortedArr[i]){
+	for(var i = 0; i < sortedArr.length; i++){
+		if(sortedArr[i + 1] == sortedArr[i]){
 			sortedArr.splice(i + 1, 1);
 			i--;
 		}
@@ -29,14 +31,14 @@ function uniqueArrary(array){
 	return results;
 }
 
-function updatePage(){
+function updatePage(){	
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		var tempURL = tabs[0].url;
 		var tempId = tabs[0].id;
 		var obj = {};
 		var tempSuiteName = getSuiteName(tempURL);
 		obj[tempSuiteName] = tempId;
-		if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){
+		if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){			
 			if(getCheckedValue() != 'null'){
 				if(getVersionNum() == ''){
 					tempURL = tempURL.replace(/sbuild=\w*[\.]*\w*/,'sbuild=null');
@@ -77,7 +79,7 @@ function updateAllPages(){
 		for(var i = 0; i < tabs.length; i++){
 			var tempURL = tabs[i].url;
 			var tempId = tabs[i].id;
-			if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){
+			if(tempURL.match('statusUpdate') != 'statusUpdate' && tempURL.match('TestCaseStatus') == 'TestCaseStatus'){				
 				var obj = {};
 				var tempSuiteName = getSuiteName(tempURL);
 				obj[tempSuiteName] = tempId;
@@ -116,6 +118,12 @@ function updateAllPages(){
 }
 
 function addURL(url){
+	if(chrome.extension.getBackgroundPage().updateWindowId == 0){
+		chrome.windows.create({state: 'minimized'}, function(windows){
+			chrome.extension.getBackgroundPage().updateWindowId = windows.id;
+			});
+	}
+	
 	var suiteName = '';
 	var obj = {};
 	if(typeof url === 'object'){
@@ -124,17 +132,17 @@ function addURL(url){
 			if(obj[suiteName] == undefined){
 				obj[suiteName] = [];
 			}
-			obj[suiteName].push(url[i]);
-			obj[suiteName].push(url[i]);
-			obj[suiteName].push(url[i]);
+			for(var j = 0; j < testunitUpdateTimes; j++){
+				obj[suiteName].push(url[i]);
+			}
 		}
 	}
 	else{
 		suiteName = getSuiteName(url);
 		obj[suiteName] = [];
-		obj[suiteName].push(url);
-		obj[suiteName].push(url);
-		obj[suiteName].push(url);
+		for(var j = 0; j < testunitUpdateTimes; j++){
+			obj[suiteName].push(url);
+		}
 	}
 	chrome.storage.local.set(obj);
 }
