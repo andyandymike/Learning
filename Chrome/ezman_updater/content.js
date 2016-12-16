@@ -7,7 +7,7 @@ var intervalCount = 0;
 var timeOutCount = 200;
 var intervalTime = 600;
 
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse){
 	if(msg.post == 'complete'){
 		complete = true;
 	}

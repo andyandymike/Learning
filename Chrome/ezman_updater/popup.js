@@ -1,4 +1,4 @@
-var testunitUpdateTimes = 1;
+var testunitUpdateTimes = 5;
 
 function getVersionNum(){
 	var versionNum = document.getElementById('version_num').value;
@@ -149,12 +149,11 @@ function addURL(url){
 
 function test(){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.executeScript(tabs[0].id, {file: 'scrolldown.js', allFrames: true, runAt: "document_start"}, function(){});
+		chrome.tabs.executeScript(tabs[0].id, {file: 'scrolldown.js', allFrames: true, runAt: "document_start"});
 	});
 }
 
 window.onload = function(){
 	document.getElementById('upgrade_page').onclick = updatePage;
 	document.getElementById('upgrade_all_pages').onclick = updateAllPages;
-	document.getElementById('test').onclick = test;
 }

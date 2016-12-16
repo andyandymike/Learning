@@ -3,3 +3,6 @@ chrome:flags/#automatic-tab-discarding
 chrome://discards/
 chrome://flags/#automatic-tab-discarding
 Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+net::ERR_ABORTED
+net::ERR_CACHE_MISS
+net::ERR_FAILED

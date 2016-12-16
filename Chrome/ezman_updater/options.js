@@ -1,6 +1,6 @@
 function checkStorage(){
 	clearDisplayArea('function_area1', 'display_area1', 'button_area');
-	chrome.storage.local.get(null, function (result){
+	chrome.storage.local.get(null, function(result){
 		for(var resultKey in result){
 			for(var i = 0; i < result[resultKey].length; i++){
 				createLine('display_area1', resultKey, result[resultKey][i]);

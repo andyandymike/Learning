@@ -31,7 +31,7 @@ chrome.webRequest.onErrorOccurred.addListener(function(details){
 	if(details.error == 'net::ERR_INCOMPLETE_CHUNKED_ENCODING'){
 		if(updatePageTabIds.indexOf(details.tabId) > -1){
 			if(details.url.indexOf('TestCaseStatus.jsp') > -1){
-				chrome.tabs.executeScript(details.tabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
+				chrome.tabs.executeScript(details.tabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
 			}
 			if(details.url.indexOf('statusUpdate') > -1){
 				chrome.tabs.remove(details.tabId);
@@ -65,31 +65,27 @@ function updatePage(updatePageTabId, updateSuiteName, updateStatus, updateBuildN
 					tempURLs.push(obj);
 					
 					if(changeInfo.discarded){
-						chrome.tabs.executeScript(updatePageTabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
+						chrome.tabs.executeScript(updatePageTabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
 					}
 					
 					if(changeInfo.status ==  'complete'){
-						chrome.tabs.sendMessage(updatePageTabId, {post: 'complete'}, function (response){});
+						chrome.tabs.sendMessage(updatePageTabId, {post: 'complete'}, function(response){});
 					}
 					
-					chrome.tabs.sendMessage(updatePageTabId, {request: 'loaded?', updateStatus: updateStatus, updateBuildNum: updateBuildNum}, function (response){
+					chrome.tabs.sendMessage(updatePageTabId, {request: 'loaded?', updateStatus: updateStatus, updateBuildNum: updateBuildNum}, function(response){
 						updatePageStatus = response.status;
 						if(updatePageStatus == 'timeout' || updatePageStatus == 'refresh'){
-							chrome.tabs.executeScript(updatePageTabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"}, function(){});
+							chrome.tabs.executeScript(updatePageTabId, {file: 'refresh.js', allFrames: true, runAt: "document_start"});
 						}
 						if(updatePageStatus == 'loaded'){
 							chrome.tabs.executeScript(updatePageTabId, {file: 'scrolldown.js', allFrames: true, runAt: "document_start"}, function(){
-								chrome.tabs.executeScript(updatePageTabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"}, function(){
-									var idIndex = updatePageTabIds.indexOf(updatePageTabId)
-									if(idIndex > -1){
-										updatePageTabIds.splice(idIndex, 1);
-									}
-								});
+								chrome.tabs.executeScript(updatePageTabId, {file: 'updateForm.js', allFrames: true, runAt: "document_start"});
 							});
 						}
 					});
 				}
 			}
+			
 			if(changeInfo.url.indexOf('statusUpdate') > -1 && tabId == updatePageTabId){
 				openedTabsNum--;
 				var tempURL = '';
@@ -102,7 +98,7 @@ function updatePage(updatePageTabId, updateSuiteName, updateStatus, updateBuildN
 				
 				var obj = {};
 				obj[updateSuiteName] = [];
-				chrome.storage.local.get(obj, function (result){
+				chrome.storage.local.get(updateSuiteName, function(result){
 					var updateURLs = result[updateSuiteName];
 					var urlIndex = updateURLs.indexOf(tempURL);
 					if(urlIndex > -1){
@@ -110,8 +106,15 @@ function updatePage(updatePageTabId, updateSuiteName, updateStatus, updateBuildN
 					}
 					obj[updateSuiteName] = updateURLs;
 					chrome.storage.local.set(obj);
+
 				});
-				chrome.tabs.remove(updatePageTabId);
+				
+				chrome.tabs.remove(updatePageTabId, function(){
+					var idIndex = updatePageTabIds.indexOf(updatePageTabId);
+					if(idIndex > -1){
+						updatePageTabIds.splice(idIndex, 1);
+					}
+				});
 			}
 		});
 	};
@@ -120,7 +123,7 @@ function updatePage(updatePageTabId, updateSuiteName, updateStatus, updateBuildN
 function reDirect(tabId, url){
 	updatePageTabIds.push(tabId);
 	chrome.tabs.get(tabId, function(tab){
-		chrome.tabs.executeScript(tabId, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"}, function(){});
+		chrome.tabs.executeScript(tabId, {code: 'window.location = "'+url+'"', allFrames: true, runAt: "document_start"});
     });
 }
 
@@ -145,8 +148,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace){
 			tabsWaitingList.push(obj);
 			tabsWaitingListKeyList.push(changeKey);
 			
-			//createReDirect(storageChange.newValue[0], changeKey);
-			while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length){
+			while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length + 1){
 				openedTabsNum++;
 				var tempChangeKey = changeKey;
 				var waitingListIndex = 0;
@@ -161,11 +163,17 @@ chrome.storage.onChanged.addListener(function(changes, namespace){
 			}
 		}
 		else{
-			chrome.tabs.query({windowId: updateWindowId, url: 'chrome://newtab/'}, function(tabs){
-				chrome.tabs.remove(tabs[0].id);
+			chrome.storage.local.remove(changeKey, function(){
+				chrome.storage.local.get(null, function(result){
+					if(Object.keys(result).length == 0){
+						chrome.tabs.query({windowId: updateWindowId, url: 'chrome://newtab/'}, function(tabs){
+							chrome.tabs.remove(tabs[0].id);
+						});
+					}
+				});
 			});
 			
-			while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length){
+			while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length + 1){
 				openedTabsNum++;
 				var tempChangeKey = changeKey;
 				var waitingListIndex = 0;
