@@ -170,26 +170,27 @@ chrome.storage.onChanged.addListener(function(changes, namespace){
 							chrome.tabs.remove(tabs[0].id);
 						});
 					}
+					else{
+						while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length + 1){
+							openedTabsNum++;
+							var tempChangeKey = changeKey;
+							var waitingListIndex = 0;
+							for(var i = 0; lastChangeKey == tempChangeKey && i < tabsWaitingListKeyList.length; i++){
+								tempChangeKey = tabsWaitingListKeyList[i];
+								waitingListIndex = i;
+							}
+							lastChangeKey = tempChangeKey;
+							createReDirect(tabsWaitingList[waitingListIndex][tabsWaitingListKeyList[waitingListIndex]]);
+							tabsWaitingList.splice(waitingListIndex, 1);
+							tabsWaitingListKeyList.splice(waitingListIndex, 1);
+						}
+					}
 				});
 			});
 			
-			while(openedTabsNum < maxTabsNum && openedTabsNum < tabsWaitingListKeyList.length + 1){
-				openedTabsNum++;
-				var tempChangeKey = changeKey;
-				var waitingListIndex = 0;
-				for(var i = 0; lastChangeKey == tempChangeKey && i < tabsWaitingListKeyList.length; i++){
-					tempChangeKey = tabsWaitingListKeyList[i];
-					waitingListIndex = i;
-				}
-				lastChangeKey = tempChangeKey;
-				createReDirect(tabsWaitingList[waitingListIndex][tabsWaitingListKeyList[waitingListIndex]]);
-				tabsWaitingList.splice(waitingListIndex, 1);
-				tabsWaitingListKeyList.splice(waitingListIndex, 1);
-			}
-			
 			for(var i = 0; i < oriPageInfo.length; i++){
 				if(oriPageInfo[i][changeKey] != undefined){
-					//chrome.tabs.remove(oriPageInfo[i][changeKey]);
+					chrome.tabs.remove(oriPageInfo[i][changeKey]);
 				}
 			}
 		}
