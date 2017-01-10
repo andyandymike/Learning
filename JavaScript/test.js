@@ -1,16 +1,22 @@
 /**
  * Created by I067382 on 11/22/2016.
  */
-function getAge() {
-    var y = new Date().getFullYear();
-    return y - this.birth;
+function create_counter(initial) {
+    var x = initial || 0;
+    return {
+        inc: function () {
+            x += 1;
+            return x;
+        }
+    }
 }
 
-var xiaoming = {
-    name: '小明',
-    birth: 1990,
-    age: getAge
-};
+var c1 = create_counter();
+console.log(c1.inc());
+console.log(c1.inc());
+console.log(c1.inc());
 
-console.log(xiaoming.age()); // 25, 正常结果
-console.log(getAge()); // NaN
+var c2 = create_counter(10);
+console.log(c2.inc());
+console.log(c2.inc());
+console.log(c2.inc());
