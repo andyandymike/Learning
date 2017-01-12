@@ -38,6 +38,18 @@ public class PlayerController : MonoBehaviour {
             count = count + 1;
             SetCountText();
         }
+
+        if (other.gameObject.CompareTag("Speed Up"))
+        {
+            other.gameObject.SetActive(false);
+            speed = speed + 5;
+        }
+
+        if (other.gameObject.CompareTag("Bigger"))
+        {
+            other.gameObject.SetActive(false);
+            transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+        }
     }
 
     void SetCountText()
