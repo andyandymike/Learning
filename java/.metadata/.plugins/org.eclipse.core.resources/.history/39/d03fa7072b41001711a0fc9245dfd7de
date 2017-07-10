@@ -1,0 +1,10 @@
+Date : Mon Feb 27 07:35:41 2017
+
+Testcase                                               Status      Elapsed Time
+-------------------------------------------------------------------------------
+hana_ansi_createtables                                 Passed      0:00:33     
+hana_ansi_inserttables                                 Passed      0:00:29     
+
+Number of testcase run:                2
+Number of testcase passed:             2
+Number of testcase failed:             0
