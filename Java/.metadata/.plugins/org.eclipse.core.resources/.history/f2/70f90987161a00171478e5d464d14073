@@ -1,0 +1,13 @@
+
+public class CharArrayFunc {
+	private char[] input;
+	
+	public CharArrayFunc(char[] input) {
+		this.input = input;
+	}
+	
+	public char[] reverseWord() {
+		
+	}
+
+}

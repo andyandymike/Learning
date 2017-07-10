@@ -1,0 +1,49 @@
+package mysqltest;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Connect {
+	static final String MYSQLURL = "jdbc:mysql://localhost/andy";
+	static final String USER = "andy";
+	static final String PASS = "bobobo";
+
+	public static void main(String[] args) {
+		Connection conn = null;
+	    PreparedStatement stmt = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			conn = DriverManager.getConnection(MYSQLURL, USER, PASS);
+			
+			String sql = "insert into test_1 values(?, ?)";
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setInt(1, 2);
+			stmt.setString(2, "B");
+			
+			int rows = stmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+				try {
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+}

@@ -1,0 +1,30 @@
+package exercise;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+
+public class SearchContent {
+	
+	static public void search(File folder, String search) {
+		for(File subFile: folder.listFiles()) {
+			if(subFile.isFile()) {
+				System.out.println("Now Searching " + subFile.getName());
+				try {
+					char[] buffer = new char[100];
+					Reader fr = new FileReader(subFile);
+					while(fr.read(buffer) != -1);
+					System.out.println(buffer);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+}

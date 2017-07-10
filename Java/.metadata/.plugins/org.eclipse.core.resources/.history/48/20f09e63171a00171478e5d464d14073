@@ -1,0 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Hello {
+	
+	public static void main(String[] args) {
+		String test = "abcdeabcdklo";
+		
+		StringFunc fan = new StringFunc(test);
+		System.out.println(fan.firstOneChar());
+	}
+
+}

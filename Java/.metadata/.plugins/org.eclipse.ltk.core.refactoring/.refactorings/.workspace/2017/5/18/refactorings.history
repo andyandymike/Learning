@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 15 resources" deleteContents="false" description="Delete 15 resources" element1="/IOInputStream" element10="/SecMD5Practice" element11="/SecPBE" element12="/SecSHA1" element13="/SecUSBKey" element14="/ThreadJoinPractice" element15="/ThreadSync" element2="/RegexGroup" element3="/RegexID" element4="/RegexQQ" element5="/RegexTemplate" element6="/RegexTime" element7="/SecAES" element8="/SecBouncyCastle" element9="/SecMD5" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="15" stamp="1493768135194"/>
+</session>

@@ -1,0 +1,13 @@
+package exercise;
+
+import java.io.File;
+
+public class SearchContent {
+	
+	static public void search(File folder, String search) {
+		for(File subFile: folder.listFiles()) {
+			System.out.println("Now Searching " + subFile.getName());
+		}
+	}
+
+}

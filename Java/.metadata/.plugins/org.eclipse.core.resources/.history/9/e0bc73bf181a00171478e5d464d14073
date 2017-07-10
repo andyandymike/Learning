@@ -1,0 +1,39 @@
+
+public class CharArrayFunc {
+	private char[] input;
+	
+	public CharArrayFunc(char[] input) {
+		this.input = input;
+	}
+	
+	private void reverseWord(int start, int end) {
+		for(;start < end;start++, end--) {
+			char temp = this.input[start];
+			this.input[start] = this.input[end];
+			this.input[end] = temp;
+		}
+	}
+	
+	public char[] reverseCharArray() {
+		this.reverseWord(0, this.input.length - 1);
+		
+		int start = 0;
+		int end = 0;
+		while(start < this.input.length - 1) {
+			if(this.input[start] == ' ') {
+				start++;
+				end++;
+			}
+			else if(this.input[end] == ' ' && end < this.input.length - 1) {
+				this.reverseWord(start, end--);
+				start = end++;
+			}
+			else {
+				end++;
+			}
+		}
+		
+		return this.input;
+	}
+
+}

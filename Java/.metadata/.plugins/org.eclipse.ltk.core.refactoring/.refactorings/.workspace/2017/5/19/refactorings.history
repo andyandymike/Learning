@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 12 resources" deleteContents="false" description="Delete 12 resources" element1="/BaseException" element10="/hellomaven" element11="/ThreadLocal" element12="/ThreadWait" element2="/ConcurrentBlockingQueue" element3="/ConcurrentCompletableFuture" element4="/ConcurrentCondition" element5="/ConcurrentExecutor" element6="/ConcurrentFuture" element7="/ConcurrentLock" element8="/Exception" element9="/hello" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="12" stamp="1494545795834"/>
+</session>
