@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: lib/acta_tool.jar lib/mysql-connector-java-3.1.14-bin.jar lib/ngdbc.jar lib/ojdbc.jar lib/sqljdbc.jar
+Main-Class: parser.main.ResultParserMain
