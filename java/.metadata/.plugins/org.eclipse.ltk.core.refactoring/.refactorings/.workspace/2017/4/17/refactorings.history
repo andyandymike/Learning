@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <session version="1.0">
-<refactoring comment="Delete resource &apos;ResultUploader&apos;" deleteContents="true" description="Delete resource &apos;ResultUploader&apos;" element1="/ResultUploader" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1493264119742"/>
+<refactoring comment="Delete 17 resources" deleteContents="false" description="Delete 17 resources" element1="/AbstractClass" element10="/IOFilePractice" element11="/JavaBean" element12="/LT1" element13="/ProcessAnnotation" element14="/ProcessAnnotationPractice" element15="/RegexIntro" element16="/StringOps" element17="/UtilStackPractice" element2="/ArrayOps" element3="/DTCalendar" element4="/DTLocalDateTime" element5="/DTWorldClock" element6="/DTZonedDateTime" element7="/FlightTime" element8="/IOCopy" element9="/IOCopyText" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="17" stamp="1492992853815"/>
 </session>
