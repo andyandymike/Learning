@@ -1,0 +1,6 @@
+words = sc.textFile('test/test.txt')
+word = words.filter(lambda x: 'Python' in x)
+word.first()
+print(word.count())
+
+
