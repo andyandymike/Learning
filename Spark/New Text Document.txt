@@ -1,6 +1,35 @@
+IPYTHON=1 pyspark
+
+
 words = sc.textFile('test/test.txt')
 word = words.filter(lambda x: 'Python' in x)
 word.first()
 print(word.count())
+lines = sc.parallelize(["hello world", "great wall"])
+words = lines.flatMap(lambda line: line.split(" "))
+for word in words.collect():
+    print(word)
+num = sc.parallelize([1,2,3,4])
+output = num.map(lambda x: x*x).collect()
 
+nums = sc.textFile('test/test2.txt')
+pairs = nums.map(lambda x: (x.split(" ")[0], x.split(" ")[1]))
 
+rdd = sc.parallelize([("a", 1), ("b", 1), ("a", 1)])
+rdd2 = sc.parallelize([("a", 6), ("c", 1), ("c", 2)])
+rdd.reduceByKey(lambda x, y: x + y).collect()
+
+rdd = sc.textFile('test/test3.txt')
+words = rdd.flatMap(lambda x: x.split(" "))
+result = words.map(lambda x: (x,1)).reduceByKey(lambda x, y: x+ y)
+
+rdd.flatMap(lambda x: x.split(" ")).countByValue()
+
+rdd = sc.textFile('test/test3.txt')
+words = rdd.flatMap(lambda x: x.split(" "))
+prdd = words.map(lambda x: (x,1))
+
+prdd = sc.parallelize([1,2,3,4,5,1,2,3,7,8,9])
+nums = prdd.map(lambda x: (x,1))
+sumCount = nums.combineByKey((lambda x: (x, 1)), (lambda x, y: (x[0] + y, x[1] + 1)), (lambda x, y: (x[0] + y[0], x[1] + y[1])))
+sumCount.map(lambda key, (x, y): (key, key/x)).collectAsMap()
