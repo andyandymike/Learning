@@ -1519,6 +1519,9 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+<<<<<<< HEAD
+!SESSION 2017-07-11 07:46:59.482 -----------------------------------------------
+=======
 
 !ENTRY org.eclipse.core.net 4 0 2017-05-10 07:49:44.963
 !MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The proxy auto-configuration script could not be downloaded
@@ -1641,6 +1644,7 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The proxy auto-configuration script could not be downloaded
 ' #12167.
 !SESSION 2017-05-17 08:02:44.210 -----------------------------------------------
+>>>>>>> 8383c6f19d5daccfae14a0595269297f6249a8bc
 eclipse.buildId=4.6.3.M20170301-0400
 java.version=1.8.0_121
 java.vendor=Oracle Corporation
@@ -1648,13 +1652,53 @@ BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.egit.ui 2 0 2017-07-11 07:47:15.784
+=======
 !ENTRY org.eclipse.egit.ui 2 0 2017-05-17 08:03:00.242
+>>>>>>> 8383c6f19d5daccfae14a0595269297f6249a8bc
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\i067382'. If this is
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.core.net 4 0 2017-07-11 07:47:59.790
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'An error occurred processing the proxy auto-configuration script
+' #12166.
+
+!ENTRY org.eclipse.core.net 4 0 2017-07-11 07:47:59.796
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'An error occurred processing the proxy auto-configuration script
+' #12166.
+
+!ENTRY org.eclipse.core.net 4 0 2017-07-11 07:47:59.801
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'An error occurred processing the proxy auto-configuration script
+' #12166.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-07-11 07:48:02.889
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: Connect to dev.eclipse.org:443 [dev.eclipse.org/198.41.30.200] failed: connect timed out. ; version: 2.0.4.v20170307-1435
+!STACK 0
+org.apache.http.conn.ConnectTimeoutException: Connect to dev.eclipse.org:443 [dev.eclipse.org/198.41.30.200] failed: connect timed out
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:134)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:319)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:363)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.request(IO.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:68)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:124)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.net.SocketTimeoutException: connect timed out
+=======
 !ENTRY org.eclipse.core.net 4 0 2017-05-17 08:03:28.215
 !MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The proxy auto-configuration script could not be downloaded
 ' #12167.
@@ -3727,6 +3771,7 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !MESSAGE Connection to http://beust.com/eclipse/updatesites/6.11.0.201703011520/p2.index failed on Connection timed out: connect. Retry attempt 0 started
 !STACK 0
 java.net.ConnectException: Connection timed out: connect
+>>>>>>> 8383c6f19d5daccfae14a0595269297f6249a8bc
 	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
 	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
 	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
@@ -3735,6 +3780,11 @@ java.net.ConnectException: Connection timed out: connect
 	at java.net.PlainSocketImpl.connect(Unknown Source)
 	at java.net.SocksSocketImpl.connect(Unknown Source)
 	at java.net.Socket.connect(Unknown Source)
+<<<<<<< HEAD
+	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:244)
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:125)
+	... 16 more
+=======
 	at org.eclipse.ecf.internal.provider.filetransfer.httpclient4.ECFHttpClientProtocolSocketFactory.connectSocket(ECFHttpClientProtocolSocketFactory.java:86)
 	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:177)
 	at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:144)
@@ -3798,3 +3848,4 @@ java -ea -classpath C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.
   Class:     org.testng.remote.RemoteTestNG
   Args:      -serport 49416 -protocol json -d C:\Users\i067382\Documents\Learning\Java\LMT1\test-output C:\Users\i067382\AppData\Local\Temp\testng-eclipse-491075498\testng-customsuite.xml
 java -ea -classpath C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.201703011520\lib\testng-remote.jar:C:\Users\i067382\Documents\Learning\Java\LMT1\bin:C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.201703011520\lib\testng.jar:C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.201703011520\lib\jcommander.jar:C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.201703011520\lib\bsh-2.0b4.jar:C:\Users\i067382\.p2\pool\plugins\org.testng.eclipse_6.11.0.201703011520\lib\snakeyaml.jar org.testng.remote.RemoteTestNG -serport 49416 -protocol json -d C:\Users\i067382\Documents\Learning\Java\LMT1\test-output C:\Users\i067382\AppData\Local\Temp\testng-eclipse-491075498\testng-customsuite.xml
+>>>>>>> 8383c6f19d5daccfae14a0595269297f6249a8bc
