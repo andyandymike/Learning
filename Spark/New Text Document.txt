@@ -33,3 +33,5 @@ prdd = sc.parallelize([1,2,3,4,5,1,2,3,7,8,9])
 nums = prdd.map(lambda x: (x,1))
 sumCount = nums.combineByKey((lambda x: (x, 1)), (lambda x, y: (x[0] + y, x[1] + 1)), (lambda x, y: (x[0] + y[0], x[1] + y[1])))
 sumCount.map(lambda key, (x, y): (key, key/x)).collectAsMap()
+
+pairs = sc.parallelize([1, 2, 3, 4, 2, 4, 1]).map(lambda x: (x, x))
