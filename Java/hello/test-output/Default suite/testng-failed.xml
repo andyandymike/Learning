@@ -3,11 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="test.andy.hello.HouseRobberTest">
+      <class name="test.andy.hello.RomanToIntTest">
         <methods>
-          <include name="houseRobber"/>
+          <include name="romanToInt"/>
         </methods>
-      </class> <!-- test.andy.hello.HouseRobberTest -->
+      </class> <!-- test.andy.hello.RomanToIntTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

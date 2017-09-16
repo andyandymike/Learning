@@ -23,7 +23,6 @@ public class HouseRobber {
 			res[i] = Math.max(res[i - 1], res[i - 2] + A[i]);
 		}
 		return res[len - 1];
-		
     }
 	
 	public long ohouseRobber(int[] A) {
