@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\i067382\Documents\DataServicesOnDemand\SoftwareTesting\1.0.11\DSoD_UI_AutoTest"/>
 		<item value="C:\Users\i067382\Documents\Learning\Java\LT1"/>
 	</list>
 	<section name="WORKBENCH_SETTINGS">
