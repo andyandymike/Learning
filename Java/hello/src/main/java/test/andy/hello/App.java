@@ -34,6 +34,7 @@ public class App implements Serializable
         Thread ThreadThree = new Thread(new Task("ThreadThree"));
         Thread ThreadFour = new Thread(new Task("ThreadFour"));
         Thread ThreadFive = new Thread(new Task("ThreadFive"));
+        int[] a = new int[5];
         
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
@@ -52,10 +53,10 @@ public class App implements Serializable
         runThread.run(); // calling run method of Thread - will execute in
         // current Thread
         
-        Integer a = 1;
-        System.out.println(System.identityHashCode(a));
-        a = 2;
-        System.out.println(System.identityHashCode(a));
+        Integer a1 = 1;
+        System.out.println(System.identityHashCode(a1));
+        a1 = 2;
+        System.out.println(System.identityHashCode(a1));
         
         String t = "a,b,c,,";
         String[] arr = t.split(",");
