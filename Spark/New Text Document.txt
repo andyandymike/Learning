@@ -1,3 +1,9 @@
+export JAVA_HOME=/usr/java/jdk1.8.0_144
+
+
+beeline -u jdbc:hive2://localhost:10000/default -n eimqa1 -p P455w0rd
+
+
 IPYTHON=1 pyspark
 
 
