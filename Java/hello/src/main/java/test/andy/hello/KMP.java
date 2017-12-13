@@ -24,7 +24,7 @@ public class KMP {
 			while(partten[i + 1] != partten[j] && i > 0) {
 				i = next[i];
 			}
-			if(partten[i + 1] ==  partten[j]) {
+			if(partten[i + 1] == partten[j]) {
 				next[j] = i + 1;
 			} else {
 				next[j] = -1;

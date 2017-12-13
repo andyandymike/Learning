@@ -37,6 +37,11 @@
       <artifactId>testng</artifactId>
   	  <version>6.10</version>
   	  <scope>test</scope>
-	</dependency>  
+	</dependency>
+  	<dependency>
+  		<groupId>org.seleniumhq.selenium</groupId>
+  		<artifactId>selenium-server</artifactId>
+  		<version>3.6.0</version>
+  	</dependency>	
   </dependencies>
 </project>
